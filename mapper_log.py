@@ -7,10 +7,25 @@
 # We need to write them out to standard output, separated by a tab
 
 import sys
+import re
+
+parts = [
+    r'(?P<host>\S+)',                   # host %h
+    r'\S+',                             # indent %l (unused)
+    r'(?P<user>\S+)',                   # user %u
+    r'\[(?P<time>.+)\]',                # time %t
+    r'"(?P<request>.+)"',               # request "%r"
+    r'(?P<status>[0-9]+)',              # status %>s
+    r'(?P<size>\S+)',                   # size %b (careful, can be '-')
+]
+pattern = re.compile(r'\s+'.join(parts)+r'\s*\Z')
+
 
 for line in sys.stdin:
-    data = line.strip().split("\t")
-    if len(data) == 6:
-        date, time, store, item, cost, payment = data
-        print "{0}\t{1}".format(item, cost)
+    #data = line.strip().split("GET ")
+    #data = line.strip().split(" ")
+    data = pattern.match(line)
+    if data is not None:
+      res=data.groupdict()
+      print "{0}\t{1}".format(res["request"].split(" ")[1],1)
 

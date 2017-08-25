@@ -1,4 +1,4 @@
-!/usr/bin/python
+#!/usr/bin/python
 
 # Format of each line is:
 # date\ttime\tstore name\titem description\tcost\tmethod of payment
@@ -10,8 +10,8 @@ import sys
 
 for line in sys.stdin:
     data = line.strip().split("\t")
-    if len(data) == 6:
-        date, time, store, item, cost, payment = data
-        print "{0}\t{1}".format(item, cost)
+    if len(data) == 7:
+        ip,identity,username,time_stamp,request,status_code,size_bytes = data
+        print "{0}\t{1}".format(ip, request)
 
 
